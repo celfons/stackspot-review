@@ -34,10 +34,17 @@ jobs:
       - name: Check Remote Quick Command answer
         run: echo ${{ toJSON(steps.rqc.outputs.rqc_result) }}
 
+      - name: Format JSON output
+        id: format-json
+        run: |
+          echo "::set-output name=formatted_result::$(echo '${{ steps.rqc.outputs.rqc_result }}' | jq -r '.[] | "- **Title**: \(.title)\n  - **Severity**: \(.severity)\n  - **Correction**: \(.correction)"')"
+        shell: bash
+
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            ${{ toJSON(steps.rqc.outputs.rqc_result) }}
+            Identified security vulnerabilities:
+            ${{ steps.format-json.outputs.formatted_result }}
           reactions: 'eyes'
