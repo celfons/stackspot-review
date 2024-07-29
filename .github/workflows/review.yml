@@ -38,10 +38,8 @@ jobs:
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
-        if: ${{ steps.rqc.outputs.rqc_result != '' }}
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            Identified security vulnerabilities through `stackspot-ai-security-action-poc` action:
             ${{ toJSON(steps.rqc.outputs.rqc_result) }}
           reactions: 'eyes'
