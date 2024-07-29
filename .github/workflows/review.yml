@@ -1,35 +1,49 @@
-name: 'StackSpot AI Remote Quick Command Action'
+name: StackSpot AI Remote Quick Command Action
 
-description: 'StackSpot AI Remote Quick Command Action'
+on:
+  push:
+    branches:
+      - main
 
-outputs:
-  rqc_result:
-    description: "Remote Quick Command answer"
-    value: ${{ steps.rqc.outputs.result }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-runs:
-  using: "composite"
-  steps:
-    - name: Setup Python
-      uses: actions/setup-python@v5.1.0
-      with:
-        python-version: '3.10' 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Install python libraries 
-      run: pip install requests
-      shell: bash
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          matrix: true
 
-    - name: Run StackSpot AI Remote Quick Command
-      id: rqc
-      run: python3 ${GITHUB_ACTION_PATH}/.github/scripts/rqc.py
-      shell: bash
-      env:
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
-        CLIENT_REALM: ${{ secrets.CLIENT_REALM }}
-        QC_SLUG: ${{ secrets.QC_SLUG }}
-        INPUT_DATA: ${{ inputs.INPUT_DATA }}
+      - name: Check changed files
+        run: echo ${{ steps.changed-files.outputs.all_changed_files }}
+        shell: bash
 
-branding:
-    icon: 'terminal'
-    color: 'gray-dark'
+      - name: Setup Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version: '3.10'
+
+      - name: Install python libraries
+        run: pip install requests
+        shell: bash
+
+      - name: Run StackSpot AI Remote Quick Command
+        id: rqc
+        run: python3 .github/scripts/rqc.py
+        shell: bash
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
+          CLIENT_REALM: ${{ secrets.CLIENT_REALM }}
+          QC_SLUG: ${{ secrets.QC_SLUG }}
+          INPUT_DATA: ${{ inputs.INPUT_DATA }}
+
+    outputs:
+      rqc_result:
+        description: "Remote Quick Command answer"
+        value: ${{ toJson(steps.rqc.outputs.result) }}
