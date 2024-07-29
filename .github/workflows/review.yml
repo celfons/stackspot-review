@@ -2,6 +2,7 @@ name: StackSpot AI Remote Quick Command Action
 
 on:
   pull_request:
+      types: [opened, synchronize]
 
 jobs:
   build:
