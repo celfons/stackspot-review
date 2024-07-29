@@ -34,12 +34,3 @@ jobs:
 
       - name: Check Remote Quick Command answer
         run: echo ${{ toJSON(steps.rqc.outputs.rqc_result) }}
-
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v4
-        if: ${{ steps.rqc.outputs.result != '' }}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}   
-          body: |
-            ${{ toJSON(steps.rqc.outputs.rqc_result) }}
-          reactions: 'eyes'
