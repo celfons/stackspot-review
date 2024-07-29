@@ -1,7 +1,7 @@
 name: StackSpot AI Remote Quick Command Action
 
 on:
-  push:
+  pull_request:
 
 jobs:
   build:
