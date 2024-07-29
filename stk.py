@@ -1,34 +1,48 @@
-import sqlite3
-from flask import Flask, request, render_template_string
+def add(x, y):
+    return x + y
 
-app = Flask(__name__)
+def subtract(x, y):
+    return x - y
 
-# SQL Injection Vulnerability
-@app.route('/login')
-def login():
-    
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
+def multiply(x, y):
+    return x * y
 
-    # Vulnerable query (susceptible to SQL Injection)
-    query = "SELECT * FROM users WHERE username='123' AND password='123"
-    cursor.execute(query)
-    user = cursor.fetchone()
+def divide(x, y):
+    if y == 0:
+        return "Erro! Divisão por zero."
+    return x / y
 
-    conn.close()
+def calculator():
+    print("Selecione a operação:")
+    print("1. Adição")
+    print("2. Subtração")
+    print("3. Multiplicação")
+    print("4. Divisão")
 
-    if user:
-        return "Login successful!"
-    else:
-        return "Invalid credentials."
+    while True:
+        choice = input("Digite a escolha (1/2/3/4): ")
 
-# Cross-Site Scripting (XSS) Vulnerability
-@app.route('/search')
-def search():
-    query = request.args.get('query')
+        if choice in ['1', '2', '3', '4']:
+            num1 = float(input("Digite o primeiro número: "))
+            num2 = float(input("Digite o segundo número: "))
 
-    # Vulnerable code (XSS)
-    return render_template_string('<h1>Search results for: {{ query }}</h1>', query=query)
+            if choice == '1':
+                print(f"{num1} + {num2} = {add(num1, num2)}")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+            elif choice == '2':
+                print(f"{num1} - {num2} = {subtract(num1, num2)}")
+
+            elif choice == '3':
+                print(f"{num1} * {num2} = {multiply(num1, num2)}")
+
+            elif choice == '4':
+                print(f"{num1} / {num2} = {divide(num1, num2)}")
+            
+            next_calculation = input("Deseja fazer outro cálculo? (s/n): ")
+            if next_calculation.lower() != 's':
+                break
+        else:
+            print("Escolha inválida. Por favor, escolha novamente.")
+
+if __name__ == "__main__":
+    calculator()
