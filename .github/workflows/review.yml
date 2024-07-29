@@ -40,7 +40,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          results=${{ toJSON(steps.rqc.outputs.rqc_result) }}
+          results='${{ toJSON(steps.rqc.outputs.rqc_result) }}'
           for result in $(echo "${results}" | jq -c '.[]'); do
             title=$(echo "${result}" | jq -r '.title')
             severity=$(echo "${result}" | jq -r '.severity')
