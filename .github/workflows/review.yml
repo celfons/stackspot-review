@@ -37,7 +37,7 @@ jobs:
       - name: Format JSON output
         id: format-json
         run: |
-          echo "::set-output name=formatted_result::$(echo '${{ steps.rqc.outputs.rqc_result }}' | jq -r '.[] | "- **Title**: \(.title)\n  - **Severity**: \(.severity)\n  - **Correction**: \(.correction)"')"
+          echo "::set-output name=formatted_result::$(echo '${{ steps.rqc.outputs.rqc_result }}' | jq -r '.[] | "- **Title**: \(.title)\n  - **Severity**: \(.severity)\n  - **Correction**: \(.correction)"')" | sed 's/"/\\"/g'
         shell: bash
 
       - name: Create comment
