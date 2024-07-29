@@ -31,7 +31,6 @@ def create_rqc_execution(qc_slug, access_token, input_data):
         'input_data': input_data
     }
 
-    # print('File data to analyze:', data) 
     response = requests.post(
         url,
         headers=headers,
@@ -90,6 +89,9 @@ result_data = json.loads(result)
 
 print(f'\n\033[36mRemote quick command result:\033[0m \n\n{result_data}')
 
-save_output('result', result_data)
+# Convert the result_data to a JSON string
+result_json_str = json.dumps(result_data)
+
+save_output('result', result_json_str)
 
 print('\n\033[36mOutput saved successfully!\033[0m')
