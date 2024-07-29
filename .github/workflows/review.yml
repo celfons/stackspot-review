@@ -21,7 +21,7 @@ runs:
 
     - name: Run StackSpot AI Remote Quick Command
       id: rqc
-      run: python3 ${GITHUB_ACTION_PATH}/rqc.py
+      run: python3 ${GITHUB_ACTION_PATH}/.github/scripts/rqc.py
       shell: bash
       env:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
