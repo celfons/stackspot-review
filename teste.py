@@ -6,14 +6,12 @@ app = Flask(__name__)
 # SQL Injection Vulnerability
 @app.route('/login')
 def login():
-    username = request.args.get('username')
-    password = request.args.get('password')
     
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
 
     # Vulnerable query (susceptible to SQL Injection)
-    query = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'"
+    query = "SELECT * FROM users WHERE username='123' AND password='123"
     cursor.execute(query)
     user = cursor.fetchone()
 
