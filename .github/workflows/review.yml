@@ -43,7 +43,3 @@ jobs:
           QC_SLUG: ${{ secrets.QC_SLUG }}
           INPUT_DATA: ${{ inputs.INPUT_DATA }}
 
-    outputs:
-      rqc_result:
-        description: "Remote Quick Command answer"
-        value: ${{ toJson(steps.rqc.outputs.result) }}
