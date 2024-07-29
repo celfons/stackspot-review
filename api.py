@@ -6,7 +6,6 @@ app = Flask(__name__)
 # SQL Injection Vulnerability
 @app.route('/login')
 def login():
-    
     username = 'root'
     password = '123'
     
