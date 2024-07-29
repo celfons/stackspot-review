@@ -37,8 +37,9 @@ jobs:
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
+        if: ${{ steps.rqc.outputs.result != '' }}
         with:
           issue-number: ${{ github.event.pull_request.number }}   
           body: |
-            ${{ steps.rqc.outputs.rqc_result }}
+            ${{ toJSON(steps.rqc.outputs.rqc_result) }}
           reactions: 'eyes'
