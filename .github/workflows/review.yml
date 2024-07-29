@@ -2,23 +2,6 @@ name: 'StackSpot AI Remote Quick Command Action'
 
 description: 'StackSpot AI Remote Quick Command Action'
 
-inputs:
-  CLIENT_ID:
-    description: Account client id
-    required: true
-  CLIENT_KEY:
-    description: Account client secret key
-    required: true
-  CLIENT_REALM:
-    description: Account slug
-    required: true
-  QC_SLUG:
-    description: Quick Command slug
-    required: true
-  INPUT_DATA:
-    description: Remote Quick Command input data
-    required: true
-
 outputs:
   rqc_result:
     description: "Remote Quick Command answer"
@@ -41,10 +24,10 @@ runs:
       run: python3 ${GITHUB_ACTION_PATH}/rqc.py
       shell: bash
       env:
-        CLIENT_ID: ${{ inputs.CLIENT_ID }}
-        CLIENT_KEY: ${{ inputs.CLIENT_KEY }}
-        CLIENT_REALM: ${{ inputs.CLIENT_REALM }}
-        QC_SLUG: ${{ inputs.QC_SLUG }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
+        CLIENT_REALM: ${{ secrets.CLIENT_REALM }}
+        QC_SLUG: ${{ secrets.QC_SLUG }}
         INPUT_DATA: ${{ inputs.INPUT_DATA }}
 
 branding:
