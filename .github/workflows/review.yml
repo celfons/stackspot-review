@@ -37,7 +37,7 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ github.event.number }}
+          issue-number: ${{ github.event.pull_request.number }}   
           body: |
             ${{ steps.rqc.outputs.rqc_result }}
           reactions: 'eyes'
