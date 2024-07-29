@@ -1,9 +1,7 @@
 name: StackSpot AI Remote Quick Command Action
 
 on:
-  pull_request:
-    branches:
-      - main
+  push:
 
 jobs:
   build:
@@ -39,8 +37,7 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
         with:
-          issue-number: ${{ github.event.pull_request.number }}
+          issue-number: ${{ github.event.number }}
           body: |
-            Arquivos alterados: 
-            ${{ steps.changed-files.outputs.all_changed_files }}
+            ${{ toJSON(steps.rqc.outputs.rqc_result) }}
           reactions: 'eyes'
