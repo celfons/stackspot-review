@@ -41,6 +41,10 @@ jobs:
       - name: Check Remote Quick Command answer
         run: echo ${{ toJSON(steps.rqc.outputs.rqc_result) }}
 
+      - name: Make create_issues.sh executable 
+        run: |
+          chmod +x ./.github/scripts/create_issues.sh
+
       - name: Create GitHub Issues
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
