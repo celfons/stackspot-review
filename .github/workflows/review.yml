@@ -41,10 +41,6 @@ jobs:
       - name: Check Remote Quick Command answer
         run: echo ${{ steps.rqc.outputs.rqc_result }}
       
-      - name: Reformat JSON with double quotes
-        id: reformat_json
-        run: echo '${{ toJSON(steps.rqc.outputs.rqc_result) }}' | sed "s/'/\"/g" | jq '.' > reformatted_result.json
-      
       - name: Make create_issues.sh executable 
         run: |
           chmod +x ./.github/scripts/create_issues.sh
@@ -54,4 +50,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          ./.github/scripts/create_issues.sh "$(cat reformatted_result.json)"
+          echo '${{ steps.rqc.outputs.rqc_result }}' | jq '.' > rqc_result.json
+          ./.github/scripts/create_issues.sh "$(cat rqc_result.json)"
