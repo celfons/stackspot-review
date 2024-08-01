@@ -29,7 +29,8 @@ jobs:
         run: echo ${{ steps.changed-files.outputs.all_changed_files }}
         shell: bash
 
-      - uses: GuillaumeFalourd/stackspot-ai-rqc@v1
+      - name: Run StackSpot AI Remote Quick Command
+        uses: GuillaumeFalourd/stackspot-ai-rqc@v1
         id: rqc
         with:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -42,13 +43,10 @@ jobs:
         run: echo ${{ steps.rqc.outputs.rqc_result }}
       
       - name: Make create_issues.sh executable 
-        run: |
-          chmod +x ./.github/scripts/create_issues.sh
+        run: chmod +x ./.github/scripts/create_issues.sh
       
       - name: Create GitHub Issues
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: |
-          echo '${{ steps.rqc.outputs.rqc_result }}' | jq '.' > rqc_result.json
-          ./.github/scripts/create_issues.sh "$(cat rqc_result.json)"
+        run: ./.github/scripts/create_issues.sh "${{ steps.rqc.outputs.rqc_result }}"
