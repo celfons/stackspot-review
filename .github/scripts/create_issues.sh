@@ -1,6 +1,8 @@
 #!/bin/bash
 
-results=$1
+import json
+
+results = json.dumps($1, indent=4)
 
 echo "${results}" | jq -c '.[]' | while read -r result; do
   title=$(echo "${result}" | jq -r '.title')
