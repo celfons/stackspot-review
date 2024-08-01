@@ -1,6 +1,6 @@
 #!/bin/bash
 
-results = $1
+results=$1
 
 echo "${results}" | jq -c '.[]' | while read -r result; do
   title=$(echo "${result}" | jq -r '.title')
@@ -11,5 +11,5 @@ echo "${results}" | jq -c '.[]' | while read -r result; do
   curl -X POST -H "Authorization: token $GH_TOKEN" \
        -H "Accept: application/vnd.github.v3+json" \
        https://api.github.com/repos/${GITHUB_REPOSITORY}/issues \
-       -d "{\"title\": \"${title}\", \"body\": \"${body}\"}"
+       -d "$(jq -n --arg title "$title" --arg body "$body" '{title: $title, body: $body}')"
 done
