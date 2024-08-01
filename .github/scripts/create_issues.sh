@@ -8,8 +8,8 @@ results=$(echo "$results" | sed "s/'/\"/g")
 
 # Processa o JSON e cria issues no GitHub
 echo "${results}" | jq -c '.[]' | while read -r result; do
+    title=$(echo "${result}" | jq -r '.title')
     correction=$(echo "${result}" | jq -r '.correction')
-    title= $(echo "${result}" | jq -r '.title')
     body="**Correction:** ${correction}"
     curl -X POST -H "Authorization: token $GH_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
