@@ -43,7 +43,7 @@ jobs:
       
       - name: Reformat JSON with double quotes
         id: reformat_json
-        run: echo '${{ toJSON(steps.rqc.outputs.rqc_result) }}' | jq '.' > reformatted_result.json
+        run: echo '${{ toJSON(steps.rqc.outputs.rqc_result) }}' | sed "s/'/\"/g" | jq '.' > reformatted_result.json
       
       - name: Make create_issues.sh executable 
         run: |
