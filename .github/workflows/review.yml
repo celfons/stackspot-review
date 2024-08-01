@@ -39,7 +39,7 @@ jobs:
           INPUT_DATA: ${{ steps.changed-files.outputs.all_changed_files }}
 
       - name: Check Remote Quick Command answer
-        run: echo ${{ toJSON(steps.rqc.outputs.rqc_result) }}
+        run: echo ${{ steps.rqc.outputs.rqc_result }}
       
       - name: Reformat JSON with double quotes
         id: reformat_json
