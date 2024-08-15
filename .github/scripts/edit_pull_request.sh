@@ -9,7 +9,18 @@ results=$(echo "$results" | sed "s/'/\"/g")
 
 # Processa o JSON e atualiza a descrição do pull request no GitHub
 title=$(echo "$results" | jq -r '.title')
-body=$(echo "$results" | jq -r '.description')
+body=$(echo "$results" | jq -r '.body')
+
+# Verifica se as variáveis necessárias estão definidas
+if [ -z "$GH_TOKEN" ]; then
+    echo "Error: GH_TOKEN is not set."
+    exit 1
+fi
+
+if [ -z "$PR_NUMBER" ]; then
+    echo "Error: PR_NUMBER is not set."
+    exit 1
+fi
 
 # Realiza a requisição PATCH
 curl -X PATCH -H "Authorization: token $GH_TOKEN" \
