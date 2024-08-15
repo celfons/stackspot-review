@@ -2,13 +2,11 @@
 
 # Parameters
 PR_NUMBER=$1
-results=$(echo "$2" | sed "s/'/\"/g")
+results=$2
 
 # Processa o JSON e atualiza a descrição do pull request no GitHub
 title=$(echo "$results" | jq -r '.title')
 body=$(echo "$results" | jq -r '.description')
-
-echo "URL: ${API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}"
 
 # Realiza a requisição PATCH
 curl -X PATCH \
