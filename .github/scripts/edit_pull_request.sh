@@ -9,7 +9,7 @@ results=$(echo "$results" | sed "s/'/\"/g")
 
 # Processa o JSON e atualiza a descrição do pull request no GitHub
 title=$(echo "$results" | jq -r '.title')
-body=$(echo "$results" | jq -r '.body')
+body=$(echo "$results" | jq -r '.description')
 
 # Verifica se as variáveis necessárias estão definidas
 if [ -z "$GH_TOKEN" ]; then
