@@ -8,6 +8,8 @@ results=$2
 title=$(echo "$results" | jq -r '.title')
 body=$(echo "$results" | jq -r '.description')
 
+echo "## https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}"
+
 # Realiza a requisição PATCH
 curl -X PATCH -H "Authorization: token $GH_TOKEN" \
     -H "Accept: application/vnd.github.full+json" \
