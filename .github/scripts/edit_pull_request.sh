@@ -4,7 +4,10 @@
 PR_NUMBER=$1
 results=$2
 
+# Substitui aspas simples por vazio
+results=$(echo "$results" | sed "s/\`//g")
 results=$(echo "$results" | sed "s/'/\"/g")
+
 
 # Processa o JSON e atualiza a descrição do pull request no GitHub
 title=$(echo "$results" | jq -r '.title')
