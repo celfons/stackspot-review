@@ -9,8 +9,7 @@ title=$(echo "$results" | jq -r '.title')
 body=$(echo "$results" | jq -r '.description')
 
 # Realiza a requisição PATCH
-curl -X PATCH \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer ${GH_TOKEN}" \
-  "${API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" \
-  -d "$(jq -n --arg title "$title" --arg body "$body" '{title: $title, body: $body}')"
+curl -X PATCH -H "Authorization: token $GH_TOKEN" \
+    -H "Accept: application/vnd.github.v3+json" \
+    https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER} \
+    -d "$(jq -n --arg title "$title" --arg body "$body" '{title: $title, body: $body}')"  
