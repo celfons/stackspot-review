@@ -4,6 +4,8 @@
 PR_NUMBER=$1
 results=$2
 
+results=$(echo "$results" | sed "s/'/\"/g")
+
 # GitHub API URL
 API_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}"
 
