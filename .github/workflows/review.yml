@@ -31,7 +31,7 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
           CLIENT_REALM: ${{ secrets.CLIENT_REALM }}
-          QC_SLUG: clean-code-marcel
+          QC_SLUG: jira-task
           INPUT_DATA: ${{ steps.changed-files.outputs.all_changed_files }}
 
       - name: Check Remote Quick Command answer
