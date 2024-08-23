@@ -6,7 +6,7 @@ Your answer should just be following the JSON structure below:
 
 ```json
 
-[(
+[{
 "title": "<title>",
 "problem": "<problem>"
 }]
