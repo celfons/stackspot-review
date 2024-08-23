@@ -51,7 +51,7 @@ jobs:
           project: "STAC"
           issuetype: "Task"
           summary: ${{ fromJson(steps.rqc.outputs.rqc_result).summary }}
-          description: ${{ fromJson(steps.rqc.outputs.rqc_result).description }}
+          description: ${{ fromJson(steps.rqc.outputs.rqc_result).descriptions }}
 
       - name: Log created issue
         run: echo "Issue ${{ steps.create-jira-task.outputs.issue }} was created"
