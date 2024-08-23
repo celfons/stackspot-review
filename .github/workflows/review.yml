@@ -51,7 +51,7 @@ jobs:
           project: "STAC"
           issuetype: "Task"
           summary: "Automated Task for code changes"
-          description: "Teste"
+          description: ${{ steps.rqc.outputs.rqc_result }}
 
       - name: Log created issue
         run: echo "Issue ${{ steps.create-jira-task.outputs.issue }} was created"
