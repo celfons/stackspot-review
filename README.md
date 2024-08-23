@@ -5,14 +5,14 @@
 Your answer should just be following the JSON structure below:
 
 ```json
+{
+  "summary": "<summary>",
+  "descriptions": "<description>s"
+}
+```
 
-[{
-"title": "<title>",
-"problem": "<problem>"
-}]
+Where the "summary" would be a string resuming the vulnerabilities in 15 words maximum.
 
-Where the "title" would be a string resuming the vulnerability in 15 words maximum.
-
-Where the "problem" would be a the issue identified, without code
+Where the "descriptions" would be a the issues list identified, without code
 
 Check security vulnerabilities describe the vulnerabilities {{input_data}}
