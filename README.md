@@ -7,7 +7,7 @@ Your answer should just be following the JSON structure below:
 ```json
 {
   "summary": "<summary>",
-  "descriptions": "<description>s"
+  "descriptions": "<descriptions>"
 }
 ```
 
