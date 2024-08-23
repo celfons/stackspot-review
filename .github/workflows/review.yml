@@ -37,6 +37,13 @@ jobs:
       - name: Check Remote Quick Command answer
         run: echo ${{ steps.rqc.outputs.rqc_result }}
 
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
       - name: Create Jira Task
         id: create-jira-task
         uses: atlassian/gajira-create@v3
@@ -45,10 +52,6 @@ jobs:
           issuetype: "Task"
           summary: "Automated Task for code changes"
           description: "Teste"
-        env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
       - name: Log created issue
         run: echo "Issue ${{ steps.create-jira-task.outputs.issue }} was created"
