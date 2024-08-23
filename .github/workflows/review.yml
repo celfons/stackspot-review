@@ -45,7 +45,6 @@ jobs:
           issuetype: "Task"
           summary: "Automated Task for code changes"
           description: "Teste"
-          fields: '{"customfield_10171": "test"}'
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
