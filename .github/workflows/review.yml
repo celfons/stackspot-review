@@ -17,6 +17,8 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v44
+        with:
+          matrix: true
 
       - name: Check changed files
         run: echo ${{ steps.changed-files.outputs.all_changed_files }}
@@ -35,23 +37,6 @@ jobs:
       - name: Check Remote Quick Command answer
         run: echo ${{ steps.rqc.outputs.rqc_result }}
 
-      - name: Install jq tool
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-
-      - name: Process JSON payload with jq
-        id: process-json
-        run: |
-          payload="${{ steps.rqc.outputs.rqc_result }}"
-          result=$(echo "$payload" | jq -c '.[]' | while read -r item; do
-          summary=$(echo "$item" | jq -r '.summary')
-          description=$(echo "$item" | jq -r '.description')
-          correction=$(echo "$item" | jq -r '.correction')
-          echo "- $summary\n- $description\n- $correction"
-          done)
-          echo "::set-output name=result::$result"
-
       - name: Login
         uses: atlassian/gajira-login@v3
         env:
@@ -66,7 +51,7 @@ jobs:
           project: "STAC"
           issuetype: "Task"
           summary: "StackSpot AI - DevSecOps"
-          description: ${{ steps.process-json.outputs.result }}
+          description: ${{ fromJson(steps.rqc.outputs.rqc_result) }}
 
       - name: Log created issue
         run: echo "Issue ${{ steps.create-jira-task.outputs.issue }} was created"
