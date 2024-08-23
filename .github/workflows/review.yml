@@ -37,17 +37,6 @@ jobs:
       - name: Check Remote Quick Command answer
         run: echo ${{ steps.rqc.outputs.rqc_result }}
 
-      - name: Install jq tool
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq
-
-      - name: Format JSON for description
-        id: format_json
-        run: |
-            formatted_json=$(echo '${{ steps.rqc.outputs.rqc_result }}' | jq -r '.[] | "- Summary: \(.summary)\n  Description: \(.description)\n  Correction: \(.correction)"')
-            echo "::set-output name=description::$formatted_json"
-
       - name: Login
         uses: atlassian/gajira-login@v3
         env:
@@ -61,8 +50,8 @@ jobs:
         with:
           project: "STAC"
           issuetype: "Task"
-          summary: "StackSpot AI - DevSecOps"
-          description: ${{ steps.format_json.outputs.description }}
+          summary: ${{ fromJson(steps.rqc.outputs.rqc_result).summary }}
+          description: ${{ fromJson(steps.rqc.outputs.rqc_result).description }}
 
       - name: Log created issue
         run: echo "Issue ${{ steps.create-jira-task.outputs.issue }} was created"
